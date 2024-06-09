@@ -1,0 +1,27 @@
+services:
+  mygu-db:
+    image: postgres
+    container_name: mygu-db
+    restart: always
+    environment:
+      POSTGRES_USER: mygu
+      POSTGRES_PASSWORD: 771e8868896c4f5b4eab1eb1fa429811530780da8db44dae6c0ef85bcb16da73
+      POSTGRES_DB: mygu
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "54322:5432"
+    networks:
+      - mygu-net
+  mygu-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mygu-be
+    restart: always
+    ports:
+      - "8000:9999"
+    networks:
+      - mygu-net
+networks:
+  mygu-net:
